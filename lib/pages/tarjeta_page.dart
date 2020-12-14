@@ -8,19 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TarjetaPage extends StatelessWidget {
 
+
   @override
   Widget build(BuildContext context) {
-
-    final tarjeta = TarjetaCredito(
-      cardNumberHidden: '4242',
-      cardNumber: '4242424242424242',
-      brand: 'visa',
-      cvv: '213',
-      expiracyDate: '01/25',
-      cardHolderName: 'Fernando Herrera'
-    );
-
-
+    final tarjeta = context.bloc<PagarBloc>().state.tarjeta;
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagar'),

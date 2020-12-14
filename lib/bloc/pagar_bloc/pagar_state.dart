@@ -2,17 +2,19 @@ part of 'pagar_bloc.dart';
 
 @immutable
 class PagarState {
-  final String montoPagar;
+  final double montoPagar;
   final String moneda;
   final bool tarjetaActiva;
   final TarjetaCredito tarjeta;
 
   PagarState({
-    this.montoPagar = "375.55",
+    this.montoPagar = 375.55,
     this.moneda = "PEN", 
     this.tarjetaActiva = false, 
     this.tarjeta
   });
+  String get montoPagarString => '${ (this.montoPagar * 100).floor() }';
+  
   PagarState copyWith({
     String montoPagar,
     String moneda,

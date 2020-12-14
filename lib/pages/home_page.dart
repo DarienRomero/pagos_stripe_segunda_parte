@@ -7,7 +7,7 @@ import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/pages/tarjeta_page.dart';
 import 'package:stripe_app/widgets/total_pay_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:stripe_app/services/stripe_service.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-
+    final estado = context.bloc<PagarBloc>().state;
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagar'),
@@ -23,11 +23,17 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon( Icons.add ), 
             onPressed: () async {
-
-              // mostrarLoading(context);
-              // await Future.delayed(Duration(seconds: 1));
-              // Navigator.pop(context);
-              mostrarAlerta( context, 'Hola', 'Mundo' );
+                
+              StripeService service = new StripeService();
+              final response = await service.pagarConNuevaTarjeta(
+                amount: estado.montoPagarString, 
+                currency: estado.moneda
+              );
+              if(response.exito){
+                mostrarAlerta(context, "Pago realizado", "" );
+              }else{
+                mostrarAlerta(context, "Ocurrió un error", "" );
+              }
 
             }
           )
@@ -51,10 +57,10 @@ class HomePage extends StatelessWidget {
                 
                 final tarjeta = tarjetas[i];
                 
-                context.bloc<PagarBloc>().add(OnSeleccionarTarjeta(tarjeta));
                 
                 return GestureDetector(
                   onTap: () {
+                    context.bloc<PagarBloc>().add(OnSeleccionarTarjeta(tarjeta));
                     Navigator.push(context, navegarFadeIn(context, TarjetaPage() ));
                   },
                   child: Hero(
