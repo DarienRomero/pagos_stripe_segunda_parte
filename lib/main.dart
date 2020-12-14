@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stripe_app/bloc/pagar/pagar_bloc.dart';
+import 'package:stripe_app/bloc/pagar_bloc/pagar_bloc.dart';
 
 import 'package:stripe_app/pages/home_page.dart';
 import 'package:stripe_app/pages/pago_completo_page.dart';
- 
+import 'package:flutter_bloc/flutter_bloc.dart';
 void main() => runApp(MyApp());
  
 class MyApp extends StatelessWidget {
@@ -12,7 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => PagarBloc())
+        BlocProvider(
+          create: (context) => PagarBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

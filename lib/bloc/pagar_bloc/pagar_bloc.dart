@@ -9,11 +9,12 @@ part 'pagar_state.dart';
 
 class PagarBloc extends Bloc<PagarEvent, PagarState> {
   PagarBloc() : super(PagarState());
+
   @override
   Stream<PagarState> mapEventToState(PagarEvent event) async* {
     if(event is OnSeleccionarTarjeta){
-      yield state.copyWith(tarjetaActiva: true, tarjeta: event.tarjeta);
-    }else if (event is OnDesactivarTarjeta){
+      yield state.copyWith(tarjeta: event.tarjeta, tarjetaActiva: true);
+    }else if(event is OnDesactivarTarjeta) {
       yield state.copyWith(tarjetaActiva: false);
     }
   }
